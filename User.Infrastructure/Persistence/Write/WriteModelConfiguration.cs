@@ -10,7 +10,7 @@ namespace User.Infrastructure.Persistence.Write
     internal static class WriteModelConfiguration
     {
         private const string SchemaName = "UserContext";
-        private const string UserContextConnectionStringSectionKey = "User.Write";
+        private const string UserContextConnectionStringSectionKey = "UserContextWrite";
         private const string HealthCheckName = "Event-store-check";
         
         internal static IServiceCollection AddWriteModelDependencies(this IServiceCollection services,
