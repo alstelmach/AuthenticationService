@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Abstractions.Messaging.Commands;
 using Core.Application.Abstractions.Messaging.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User.Application.Contracts.User.Commands;
 using User.Application.Contracts.User.Queries;
@@ -40,7 +41,7 @@ namespace User.Api.Controllers
         }
 
         [HttpGet("{userId}")]
-        // ToDo: Authorize
+        [Authorize]
         public async Task<ActionResult<UserDto>> GetUserAsync([FromRoute] Guid userId,
             CancellationToken cancellationToken)
         {
