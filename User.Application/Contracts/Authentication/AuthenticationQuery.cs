@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using Core.Application.Abstractions.Messaging.Queries;
-using User.Application.Dto;
+using User.Application.Dto.Authentication;
 
 namespace User.Application.Contracts.Authentication
 {

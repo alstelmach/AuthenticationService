@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using User.Domain.User.Events;
-using User.IntegrationEvents.User;
 using Core.Application.Abstractions.Messaging.Events;
 using User.Application.Dto.User;
+using User.Domain.User.Events;
+using User.IntegrationEvents.User;
 
-namespace User.Application.Handlers.EventHandlers.Domain.User
+namespace User.Application.Handlers.EventHandlers.Domain
 {
     public sealed class UserDomainEventsHandler : IDomainEventHandler<UserCreatedDomainEvent>,
         IDomainEventHandler<PasswordChangedDomainEvent>,

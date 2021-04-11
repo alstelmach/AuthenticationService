@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Core.Application.Abstractions.Messaging.Queries;
 using User.Application.Contracts.Authentication;
-using User.Application.Dto;
+using User.Application.Dto.Authentication;
 using User.Application.Dto.User;
 using User.Application.Services;
 using User.Domain.User.Services;

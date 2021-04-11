@@ -1,6 +1,6 @@
 ﻿using User.Application.Dto.User;
 
-namespace User.Application.Dto
+namespace User.Application.Dto.Authentication
 {
     public sealed class AuthenticationResultDto
     {

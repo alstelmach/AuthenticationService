@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using User.Domain.User.Events;
 using User.Domain.User.Exceptions;
 using User.Domain.User.Factories;
