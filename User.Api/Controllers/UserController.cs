@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Abstractions.Messaging.Commands;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User.Application.Contracts.User.Commands;
 using User.Application.Contracts.User.Queries;
+using User.Application.Dto.Role;
 using User.Application.Dto.User;
 using User.Infrastructure.Authorization;
 using Controller = Core.Infrastructure.Mvc.Controller;
@@ -42,6 +44,34 @@ namespace User.Api.Controllers
             return resultAction;
         }
 
+        [HttpPost("{userId}/roles")]
+        // ToDo: only for admin
+        public async Task<IActionResult> AssignUserRoleAsync([FromRoute] Guid userId,
+            [FromBody] AssignRoleToUserCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.UserId = userId;
+            command.ClaimsPrincipal = User;
+
+            await CommandBus.SendAsync(command, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpGet]
+        // ToDo: only for admin
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersAsync(CancellationToken cancellationToken)
+        {
+            var query = new GetUsersQuery
+            {
+                ClaimsPrincipal = User
+            };
+
+            var users = await QueryBus.QueryAsync(query, cancellationToken);
+
+            return Ok(users);
+        }
+
         [HttpGet("{userId}")]
         [Authorize(Policy = AuthorizationPolicies.ResourceOwnerIdentityConfirmationRequiredPolicy)]
         public async Task<ActionResult<UserDto>> GetUserAsync([FromRoute] Guid userId,
@@ -58,6 +88,22 @@ namespace User.Api.Controllers
             return user is not null
                 ? Ok(user)
                 : NotFound();
+        }
+
+        [HttpGet("{userId}/roles")]
+        // ToDo: Only for admin
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetUserRolesAsync([FromRoute] Guid userId,
+            CancellationToken cancellationToken)
+        {
+            var query = new GetUserRolesQuery
+            {
+                UserId = userId,
+                ClaimsPrincipal = User
+            };
+
+            var roles = await QueryBus.QueryAsync(query, cancellationToken);
+
+            return Ok(roles);
         }
 
         [HttpPut("{userId}/password")]
@@ -80,6 +126,20 @@ namespace User.Api.Controllers
             {
                 ClaimsPrincipal = User
             };
+
+            await CommandBus.SendAsync(command, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpDelete("{userId}/roles")]
+        // ToDo: Only for admin
+        public async Task<IActionResult> DenyUserRoleAsync([FromRoute] Guid userId,
+            [FromBody] DenyUserRoleCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.UserId = userId;
+            command.ClaimsPrincipal = User;
 
             await CommandBus.SendAsync(command, cancellationToken);
 

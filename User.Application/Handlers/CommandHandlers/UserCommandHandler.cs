@@ -6,25 +6,31 @@ using Core.Application.Abstractions.Messaging.Commands;
 using Core.Infrastructure.Identity;
 using MediatR;
 using User.Application.Contracts.User.Commands;
+using User.Domain.Role.Repositories;
 using User.Domain.User.Repositories;
 
 namespace User.Application.Handlers.CommandHandlers
 {
     public sealed class UserCommandHandler : ICommandHandler<CreateUserCommand>,
         ICommandHandler<ChangeUserPasswordCommand>,
-        ICommandHandler<DeleteUserCommand>
+        ICommandHandler<DeleteUserCommand>,
+        ICommandHandler<AssignRoleToUserCommand>,
+        ICommandHandler<DenyUserRoleCommand>
     {
         private readonly UserService _userService;
         private readonly IEncryptionService _encryptionService;
         private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
 
         public UserCommandHandler(UserService userService,
             IEncryptionService encryptionService,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IRoleRepository roleRepository)
         {
             _userService = userService;
             _encryptionService = encryptionService;
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
         }
         
         public async Task<Unit> Handle(CreateUserCommand command, CancellationToken cancellationToken)
@@ -61,6 +67,28 @@ namespace User.Application.Handlers.CommandHandlers
             var user = await _userRepository.GetAsync(ownerId, cancellationToken);
 
             user.DeleteUser();
+            await _userRepository.UpdateAsync(user, cancellationToken);
+
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(AssignRoleToUserCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userRepository.GetAsync(command.UserId, cancellationToken);
+            var role = await _roleRepository.GetAsync(command.RoleId, cancellationToken);
+
+            user.AssignRole(role);
+            await _userRepository.UpdateAsync(user, cancellationToken);
+
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(DenyUserRoleCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userRepository.GetAsync(command.UserId, cancellationToken);
+            var role = await _roleRepository.GetAsync(command.RoleId, cancellationToken);
+
+            user.DenyRole(role);
             await _userRepository.UpdateAsync(user, cancellationToken);
 
             return Unit.Value;

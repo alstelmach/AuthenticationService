@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,17 @@ namespace User.Infrastructure.Persistence.Read.Repositories
         public UserDtoRepository(UserReadModelContext dbContext)
             : base(dbContext)
         {
+        }
+
+        public async Task<IEnumerable<UserDto>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var sqlQuery =
+                "SELECT \"Id\", \"Login\", \"Password\", \"FirstName\", \"LastName\", \"MailAddress\" "
+                + $"FROM \"{UserReadModelContext.SchemaName}\".\"Users\"";
+
+            var users = await QueryAsync(sqlQuery);
+
+            return users;
         }
 
         public async Task<UserDto> GetAsync(string login,
