@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Domain.Abstractions.BuildingBlocks;
 
-namespace User.Domain.Roles.Events
+namespace User.Domain.Role.Events
 {
     public sealed class RoleCreatedDomainEvent : DomainEvent
     {

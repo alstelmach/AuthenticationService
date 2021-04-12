@@ -1,6 +1,6 @@
 ﻿using Core.Domain.Abstractions.BuildingBlocks;
 
-namespace User.Domain.Roles.Repositories
+namespace User.Domain.Role.Repositories
 {
     public interface IRoleRepository : ICrudRepository<Role>
     {

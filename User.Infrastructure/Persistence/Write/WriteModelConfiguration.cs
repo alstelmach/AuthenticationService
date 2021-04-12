@@ -4,7 +4,7 @@ using Core.Infrastructure.Persistence.Marten;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using User.Domain.Permission.Repositories;
-using User.Domain.Roles.Repositories;
+using User.Domain.Role.Repositories;
 using User.Infrastructure.Persistence.Write.Repositories;
 
 namespace User.Infrastructure.Persistence.Write

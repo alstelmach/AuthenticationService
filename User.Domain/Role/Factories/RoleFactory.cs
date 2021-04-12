@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace User.Domain.Roles.Factories
+namespace User.Domain.Role.Factories
 {
     public static class RoleFactory
     {
