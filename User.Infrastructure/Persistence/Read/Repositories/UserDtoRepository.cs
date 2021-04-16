@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Infrastructure.Persistence.BuildingBlocks;
@@ -32,7 +31,6 @@ namespace User.Infrastructure.Persistence.Read.Repositories
         }
 
         public async Task<UserDto> GetAsync(string login,
-            bool includeRoles = false,
             CancellationToken cancellationToken = default)
         {
             var sqlQuery =
@@ -41,15 +39,12 @@ namespace User.Infrastructure.Persistence.Read.Repositories
                 + $"WHERE \"Login\" = '{login}' "
                 + "LIMIT 1";
 
-            var user = includeRoles
-                ? GetUserIncludingRoles(sqlQuery)
-                : await QueryFirstOrDefaultAsync(sqlQuery, cancellationToken);
+            var user = await QueryFirstOrDefaultAsync(sqlQuery, cancellationToken);
 
             return user;
         }
 
         public async Task<UserDto> GetAsync(Guid id,
-            bool includeRoles = false,
             CancellationToken cancellationToken = default)
         {
             var sqlQuery =
@@ -58,9 +53,7 @@ namespace User.Infrastructure.Persistence.Read.Repositories
                 + $"WHERE \"Id\" = '{id}' "
                 + "LIMIT 1";
 
-            var user = includeRoles
-                ? GetUserIncludingRoles(sqlQuery)
-                : await QueryFirstOrDefaultAsync(sqlQuery, cancellationToken);
+            var user = await QueryFirstOrDefaultAsync(sqlQuery, cancellationToken);
 
             return user;
         }
@@ -74,8 +67,8 @@ namespace User.Infrastructure.Persistence.Read.Repositories
                 + $"FROM \"{UserReadModelContext.SchemaName}\".\"PermissionRoleAssignments\" permissionRoleAssignments "
                 + $"INNER JOIN \"{UserReadModelContext.SchemaName}\".\"UserRoleAssignments\" userRoleAssignments "
                 + "ON permissionRoleAssignments.\"RoleId\" = userRoleAssignments.\"RolesId\" "
-                + $"WHERE userRoleAssignments.\"UsersId\" = '{UserReadModelContext.SchemaName}' "
-                + $"AND permissionRoleAssignments.\"PermissionId\" = '{UserReadModelContext.SchemaName}' "
+                + $"WHERE userRoleAssignments.\"UsersId\" = '{userId}' "
+                + $"AND permissionRoleAssignments.\"PermissionId\" = '{permissionId}' "
                 + "LIMIT 1";
 
             var isAuthorized = await DbContext
@@ -85,18 +78,13 @@ namespace User.Infrastructure.Persistence.Read.Repositories
 
             return isAuthorized;
         }
-
-        private UserDto GetUserIncludingRoles(string sqlQuery) =>
-            DbContext
-                .Database
-                .GetDbConnection()
-                .Query<UserDto, RoleDto, UserDto>(sqlQuery,
-                    (userDto, roleDto) =>
-                    {
-                        userDto.Roles.Add(roleDto);
-                        return userDto;
-                    },
-                    splitOn: "RolesId")
-                .FirstOrDefault();
+        
+        public async Task<UserDto> GetUserIncludingRolesAsync(Guid userId) =>
+            await DbContext
+                .Set<UserDto>()
+                .Include(user =>
+                    user.Roles)
+                .FirstOrDefaultAsync(user =>
+                    user.Id == userId);
     }
 }

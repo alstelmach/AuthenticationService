@@ -13,23 +13,25 @@ namespace User.Application.Handlers.QueryHandlers
         IQueryHandler<GetUserRolesQuery, IEnumerable<RoleDto>>
     {
         private readonly IUserDtoRepository _userDtoRepository;
+        private readonly IRoleDtoRepository _roleDtoRepository;
 
-        public UserQueryHandler(IUserDtoRepository userDtoRepository)
+        public UserQueryHandler(IUserDtoRepository userDtoRepository,
+            IRoleDtoRepository roleDtoRepository)
         {
             _userDtoRepository = userDtoRepository;
+            _roleDtoRepository = roleDtoRepository;
         }
 
         public async Task<UserDto> Handle(GetUserQuery query, CancellationToken cancellationToken) =>
             await _userDtoRepository
-                .GetAsync(query.Id, false, cancellationToken);
+                .GetAsync(query.Id, cancellationToken);
 
         public async Task<IEnumerable<UserDto>> Handle(GetUsersQuery query, CancellationToken cancellationToken) =>
             await _userDtoRepository
                 .GetAsync(cancellationToken);
 
         public async Task<IEnumerable<RoleDto>> Handle(GetUserRolesQuery query, CancellationToken cancellationToken) =>
-            (await _userDtoRepository
-                .GetAsync(query.UserId, true, cancellationToken))
-                .Roles;
+            await _roleDtoRepository
+                .GetUserRolesAsync(query.UserId, cancellationToken);
     }
 }

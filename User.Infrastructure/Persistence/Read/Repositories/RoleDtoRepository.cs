@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Infrastructure.Persistence.BuildingBlocks;
@@ -27,6 +28,7 @@ namespace User.Infrastructure.Persistence.Read.Repositories
                 .Set<RolePermissionAssignment>()
                 .AddAsync(assignment);
 
+            await DbContext.SaveChangesAsync();
             DbContext.Entry(assignment).State = EntityState.Detached;
         }
 
@@ -36,11 +38,25 @@ namespace User.Infrastructure.Persistence.Read.Repositories
             var sqlQuery =
                 "SELECT \"Id\", \"Name\" "
                 + $"FROM \"{UserReadModelContext.SchemaName}\".\"Roles\" "
+                + $"WHERE \"Id\" = \"{id}\" "
                 + "LIMIT 1";
 
             var user = await QueryFirstOrDefaultAsync(sqlQuery, cancellationToken);
 
             return user;
+        }
+
+        public async Task<IEnumerable<RoleDto>> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            var sqlQuery =
+                "SELECT roles.\"Id\", roles.\"Name\" "
+                + $"FROM \"{UserReadModelContext.SchemaName}\".\"Roles\" roles "
+                + $"INNER JOIN \"{UserReadModelContext.SchemaName}\".\"UserRoleAssignments\" assignments ON roles.\"Id\" = assignments.\"RolesId\" "
+                + $"WHERE assignments.\"UsersId\" = '{userId}'";
+
+            var roles = await QueryAsync(sqlQuery, cancellationToken);
+
+            return roles;
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using User.Domain.User.Repositories;
 using Core.Domain.Abstractions.BuildingBlocks;
 using Core.Infrastructure.Persistence.Marten;
 using User.Domain.User.Enumerations;
+using User.Domain.User.Events;
 
 namespace User.Infrastructure.Persistence.Write.Repositories
 {
@@ -26,5 +28,15 @@ namespace User.Infrastructure.Persistence.Write.Repositories
 
             return returnValue;
         }
+
+        public async Task<bool> CheckIsLoginFreeAsync(string login, CancellationToken cancellationToken = default) =>
+            (await EventStore
+                .GetDomainEventsAsync<UserCreatedDomainEvent>(cancellationToken))
+                .All(@event => @event.Login != login);
+
+        public async Task<bool> CheckIsMailAddressFreeAsync(string mailAddress, CancellationToken cancellationToken = default) =>
+            (await EventStore
+                .GetDomainEventsAsync<UserCreatedDomainEvent>(cancellationToken))
+                .All(@event => @event.MailAddress != mailAddress);
     }
 }

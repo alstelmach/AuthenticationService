@@ -14,6 +14,11 @@ namespace User.Domain.Permission
             Enqueue(new PermissionCreatedDomainEvent(Id, Description));
         }
 
+        private Permission()
+            : base(Guid.Empty)
+        {
+        }
+
         public string Description { get; private set; }
 
         private void Apply(PermissionCreatedDomainEvent @event) =>

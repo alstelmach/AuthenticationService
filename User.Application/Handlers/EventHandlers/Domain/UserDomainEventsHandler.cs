@@ -116,15 +116,20 @@ namespace User.Application.Handlers.EventHandlers.Domain
 
         private async Task DenyUserDtoRoleAsync(UserRoleDeniedDomainEvent @event)
         {
-            var userDto = await _userDtoRepository.GetAsync(@event.EntityId, true);
+            var user = await _userDtoRepository.GetUserIncludingRolesAsync(@event.EntityId);
+            
+            var doesExist = user is not null;
+            
+            if (doesExist)
+            {
+                user.Roles = user
+                    .Roles
+                    .Where(role =>
+                        role.Id != @event.RoleId)
+                    .ToList();
 
-            userDto.Roles = userDto
-                .Roles
-                .Where(role =>
-                    role.Id != @event.RoleId)
-                .ToList();
-
-            await _userDtoRepository.UpdateAsync(userDto);
+                await _userDtoRepository.UpdateAsync(user);
+            }
         }
     }
 }

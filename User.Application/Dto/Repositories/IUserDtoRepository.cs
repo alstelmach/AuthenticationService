@@ -9,8 +9,9 @@ namespace User.Application.Dto.Repositories
     public interface IUserDtoRepository : IReadModelRepository<UserDto>
     {
         Task<IEnumerable<UserDto>> GetAsync(CancellationToken cancellationToken = default);
-        Task<UserDto> GetAsync(string login, bool includeRoles = false, CancellationToken cancellationToken = default);
-        Task<UserDto> GetAsync(Guid id, bool includeRoles = false, CancellationToken cancellationToken = default);
+        Task<UserDto> GetAsync(string login, CancellationToken cancellationToken = default);
+        Task<UserDto> GetAsync(Guid id, CancellationToken cancellationToken = default);
         Task<bool> CheckIsAuthorized(Guid userId, Guid permissionId, CancellationToken cancellationToken = default);
+        Task<UserDto> GetUserIncludingRolesAsync(Guid userId);
     }
 }

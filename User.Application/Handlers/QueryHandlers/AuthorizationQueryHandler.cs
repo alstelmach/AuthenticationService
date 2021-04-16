@@ -32,7 +32,6 @@ namespace User.Application.Handlers.QueryHandlers
                 PermissionId = query.PermissionId,
                 IsAuthorized = isAuthorized
             };
-            
 
             return authorizationResults;
         }

@@ -72,7 +72,7 @@ namespace User.Domain.User
 
             if (isAlreadyAssigned)
             {
-                throw new RoleAlreadyAssignedToUserException(role.Id, Id);
+                throw new RoleAlreadyAssignedToUserException(role.Name, Login);
             }
 
             AssignRole(role.Id);

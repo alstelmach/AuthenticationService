@@ -8,9 +8,9 @@ namespace User.Domain.User.Exceptions
     {
         private const string MessagePattern = "Role {0} already assigned to {1} user";
         
-        public RoleAlreadyAssignedToUserException(Guid roleId,
-            Guid userId)
-                : base(string.Format(MessagePattern, roleId, userId))
+        public RoleAlreadyAssignedToUserException(string roleName,
+            string userLogin)
+                : base(string.Format(MessagePattern, roleName, userLogin))
         {
         }
     }

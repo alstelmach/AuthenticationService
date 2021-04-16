@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using User.Domain.User.Exceptions;
@@ -21,16 +22,16 @@ namespace User.UnitTests.Domain.User.Validators
                 _userRepositoryMock.Object,
                 _mailAddressValidator.Object);
             
-            // ToDo: clean up after implementation
-            // _userRepositoryMock
-            //     .Setup(repo =>
-            //         repo.GetAsync(CancellationToken.None))
-            //     .ReturnsAsync(new[]
-            //     {
-            //         UserFactory.Create(Guid.NewGuid(), "jkowal", Array.Empty<byte>(), "Jan", "Kowalski", "jkowal@gmail.com"),
-            //         UserFactory.Create(Guid.NewGuid(), "ajaworek", Array.Empty<byte>(), "Adam", "Jaworek", "ajaworek@gmail.com"),
-            //     });
-
+            _userRepositoryMock
+                .Setup(repo =>
+                    repo.CheckIsLoginFreeAsync(It.IsAny<string>(), CancellationToken.None))
+                .ReturnsAsync(true);
+            
+            _userRepositoryMock
+                .Setup(repo =>
+                    repo.CheckIsMailAddressFreeAsync(It.IsAny<string>(), CancellationToken.None))
+                .ReturnsAsync(true);
+            
             _mailAddressValidator
                 .Setup(validator =>
                     validator.Validate(It.IsAny<string>()))
@@ -60,9 +61,14 @@ namespace User.UnitTests.Domain.User.Validators
         public async Task ShouldRejectTakenLogin()
         {
             // Arrange
+            _userRepositoryMock
+                .Setup(repo =>
+                    repo.CheckIsLoginFreeAsync(It.IsAny<string>(), CancellationToken.None))
+                .ReturnsAsync(false);
+            
             var user = UserFactory.Create(
                 Guid.NewGuid(),
-                "ajaworek",
+                "anowacki",
                 Array.Empty<byte>(),
                 "Adam",
                 "Nowacki",
@@ -79,6 +85,11 @@ namespace User.UnitTests.Domain.User.Validators
         public async Task ShouldRejectTakenMailAddress()
         {
             // Arrange
+            _userRepositoryMock
+                .Setup(repo =>
+                    repo.CheckIsMailAddressFreeAsync(It.IsAny<string>(), CancellationToken.None))
+                .ReturnsAsync(false);
+            
             var user = UserFactory.Create(
                 Guid.NewGuid(),
                 "bnowak",

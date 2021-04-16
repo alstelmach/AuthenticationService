@@ -6,11 +6,10 @@ namespace User.Domain.Role.Exceptions
     [Serializable]
     public sealed class PermissionAlreadyAssignedToRoleException : DomainException
     {
-        private const string MessagePattern = "Permission {0} already assigned to {1} role";
+        private const string MessagePattern = "Permission already assigned to {0} role";
 
-        internal PermissionAlreadyAssignedToRoleException(Guid permissionId,
-            Guid roleId)
-                : base(string.Format(MessagePattern, permissionId, roleId))
+        internal PermissionAlreadyAssignedToRoleException(string roleName)
+            : base(string.Format(MessagePattern, roleName))
         {
         }
     }

@@ -16,6 +16,11 @@ namespace User.Domain.Role
             Name = name;
             Enqueue(new RoleCreatedDomainEvent(Id, Name));
         }
+
+        private Role()
+            : base(Guid.Empty)
+        {
+        }
         
         public string Name { get; private set; }
         public ICollection<Guid> Permissions { get; } = new List<Guid>();
@@ -28,7 +33,7 @@ namespace User.Domain.Role
 
             if (isAlreadyAssigned)
             {
-                throw new PermissionAlreadyAssignedToRoleException(permission.Id, Id);
+                throw new PermissionAlreadyAssignedToRoleException(Name);
             }
 
             Permissions.Add(permission.Id);

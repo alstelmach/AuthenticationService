@@ -29,28 +29,14 @@ namespace User.Domain.User.Validators
                 .MustAsync(BeAUniqueMailAddressAsync)
                 .OnAnyFailure(user => throw new UserMailAddressUniquenessException(user.MailAddress));
         }
-        
-        private async Task<bool> BeAUniqueLoginAsync(string login, CancellationToken cancellationToken)
-        {
-            // ToDo: implement
-            // var users = await _userRepository.GetAsync(cancellationToken);
-            // var isUnique = users.All(user => user.Login != login);
-            // 
-            // return isUnique;
-            return true;
-        }
+
+        private async Task<bool> BeAUniqueLoginAsync(string login, CancellationToken cancellationToken) =>
+            await _userRepository.CheckIsLoginFreeAsync(login, cancellationToken);
 
         private bool BeAValidMailAddress(string mailAddress) =>
             _mailAddressValidator.Validate(mailAddress);
 
-        private async Task<bool> BeAUniqueMailAddressAsync(string mailAddress, CancellationToken cancellationToken)
-        {
-            // ToDo: implement
-            // var users = await _userRepository.GetAsync(cancellationToken);
-            // var isUnique = users.All(user => user.MailAddress != mailAddress);
-            // 
-            // return isUnique;
-            return true;
-        }
+        private async Task<bool> BeAUniqueMailAddressAsync(string mailAddress, CancellationToken cancellationToken) =>
+            await _userRepository.CheckIsMailAddressFreeAsync(mailAddress, cancellationToken);
     }
 }
