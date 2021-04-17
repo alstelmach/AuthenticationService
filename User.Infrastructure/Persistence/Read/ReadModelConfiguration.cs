@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using Core.Infrastructure.Persistence.BuildingBlocks;
-using Core.Infrastructure.Persistence.EntityFrameworkCore;
+using AsCore.Infrastructure.Persistence.BuildingBlocks;
+using AsCore.Infrastructure.Persistence.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using User.Application.Dto.Repositories;
+using User.Application.Repositories;
 using User.Infrastructure.Persistence.Read.Context;
 using User.Infrastructure.Persistence.Read.Repositories;
 

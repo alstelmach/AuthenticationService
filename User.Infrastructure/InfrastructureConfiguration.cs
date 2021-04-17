@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Text;
-using Core.Infrastructure.Identity;
+using AsCore.Infrastructure.Identity;
+using AsCore.Infrastructure.Mvc;
 using User.Infrastructure.Messaging;
 using User.Infrastructure.Persistence;
-using User.Infrastructure.Services;
-using Core.Infrastructure.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using User.Infrastructure.Authorization;
 using User.Infrastructure.Authorization.Requirements;
 using User.Infrastructure.Persistence.Read;
+using User.Infrastructure.Services;
 using User.Infrastructure.Services.TokenGeneration;
 
 namespace User.Infrastructure

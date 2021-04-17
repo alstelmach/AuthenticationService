@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Core.Domain.Abstractions.BuildingBlocks;
+using AsCore.Domain.Abstractions.BuildingBlocks;
 
 namespace User.Domain.User.Repositories
 {

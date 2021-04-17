@@ -10,7 +10,7 @@ namespace User.Domain.User.Factories
             string firstName,
             string lastName,
             string mailAddress) =>
-                new(id,
+                new (id,
                     login,
                     password,
                     firstName,

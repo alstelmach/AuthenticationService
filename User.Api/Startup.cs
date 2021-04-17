@@ -1,9 +1,9 @@
 using System;
-using Core.Infrastructure.HealthCheck;
-using Core.Infrastructure.Identity;
-using Core.Infrastructure.Mvc;
+using AsCore.Infrastructure.HealthCheck;
+using AsCore.Infrastructure.Identity;
+using AsCore.Infrastructure.Mvc;
+using AsCore.Utilities.Swagger;
 using User.Domain;
-using Core.Utilities.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

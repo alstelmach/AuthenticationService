@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AsCore.Application.Abstractions.Identity;
+using AsCore.Application.Abstractions.Messaging.Commands;
 using User.Domain.User.Services;
-using Core.Application.Abstractions.Messaging.Commands;
-using Core.Infrastructure.Identity;
 using MediatR;
 using User.Application.Contracts.User.Commands;
 using User.Domain.Role.Repositories;

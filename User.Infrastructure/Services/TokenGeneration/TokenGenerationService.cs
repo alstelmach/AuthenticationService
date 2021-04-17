@@ -23,7 +23,7 @@ namespace User.Infrastructure.Services.TokenGeneration
             var expirationTime = DateTime.UtcNow.AddMinutes(validityTimeInMinutes);
             var claims = new List<Claim>
             {
-                new (Core.Infrastructure.Identity.ClaimTypes.OwnerId, ownerId.ToString())
+                new (AsCore.Application.Abstractions.Identity.ClaimTypes.OwnerId, ownerId.ToString())
             };
             
             var tokenDescriptor = new SecurityTokenDescriptor

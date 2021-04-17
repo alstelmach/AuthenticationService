@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.Abstractions.Messaging.Queries;
+using AsCore.Application.Abstractions.Messaging.Queries;
 using User.Application.Contracts.Authentication;
 using User.Application.Dto;
-using User.Application.Dto.Repositories;
+using User.Application.Repositories;
 using User.Application.Services;
 using User.Domain.User.Services;
 

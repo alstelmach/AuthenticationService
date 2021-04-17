@@ -1,5 +1,5 @@
-﻿using Core.Domain.Abstractions.BuildingBlocks;
-using Core.Infrastructure.Persistence.Marten;
+﻿using AsCore.Domain.Abstractions.BuildingBlocks;
+using AsCore.Infrastructure.Persistence.Marten;
 using User.Domain.Role;
 using User.Domain.Role.Repositories;
 

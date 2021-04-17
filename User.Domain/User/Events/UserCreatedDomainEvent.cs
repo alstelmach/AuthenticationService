@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Domain.Abstractions.BuildingBlocks;
+using AsCore.Domain.Abstractions.BuildingBlocks;
 using User.Domain.User.Enumerations;
 
 namespace User.Domain.User.Events

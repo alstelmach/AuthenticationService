@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.Abstractions.Messaging.Queries;
-using Core.Infrastructure.Identity;
+using AsCore.Application.Abstractions.Identity;
+using AsCore.Application.Abstractions.Messaging.Queries;
 using User.Application.Contracts.Authorization;
 using User.Application.Dto;
-using User.Application.Dto.Repositories;
+using User.Application.Repositories;
 
 namespace User.Application.Handlers.QueryHandlers
 {

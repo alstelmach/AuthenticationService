@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AsCore.Domain.Abstractions.BuildingBlocks;
+using AsCore.Infrastructure.Persistence.Marten;
 using User.Domain.User.Repositories;
-using Core.Domain.Abstractions.BuildingBlocks;
-using Core.Infrastructure.Persistence.Marten;
 using User.Domain.User.Enumerations;
 using User.Domain.User.Events;
 

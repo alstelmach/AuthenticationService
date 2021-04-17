@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Infrastructure.Persistence.BuildingBlocks;
+using AsCore.Application.Abstractions.Repositories;
+using User.Application.Dto;
 
-namespace User.Application.Dto.Repositories
+namespace User.Application.Repositories
 {
     public interface IRoleDtoRepository : IReadModelRepository<RoleDto>
     {

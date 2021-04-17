@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Infrastructure.Persistence.BuildingBlocks;
+using AsCore.Infrastructure.Persistence.BuildingBlocks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using User.Application.Dto;
-using User.Application.Dto.Repositories;
+using User.Application.Repositories;
 using User.Infrastructure.Persistence.Read.Context;
 
 namespace User.Infrastructure.Persistence.Read.Repositories

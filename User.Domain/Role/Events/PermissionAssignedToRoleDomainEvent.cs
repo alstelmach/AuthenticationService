@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Domain.Abstractions.BuildingBlocks;
+using AsCore.Domain.Abstractions.BuildingBlocks;
 
 namespace User.Domain.Role.Events
 {

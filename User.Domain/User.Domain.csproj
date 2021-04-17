@@ -3,18 +3,9 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-
+    
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-        <HintPath>..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Core\Core.Domain.Abstractions\Core.Domain.Abstractions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="AsCore.Domain.Abstractions" Version="1.0.1" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.3" />
     </ItemGroup>
 

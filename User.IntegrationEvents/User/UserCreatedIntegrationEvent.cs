@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Application.Abstractions.Messaging.Events;
+using AsCore.Application.Abstractions.Messaging.Events;
 
 namespace User.IntegrationEvents.User
 {

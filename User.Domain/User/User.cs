@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Domain.Abstractions.BuildingBlocks;
+using AsCore.Domain.Abstractions.BuildingBlocks;
 using User.Domain.User.Enumerations;
 using User.Domain.User.Events;
 using User.Domain.User.Exceptions;

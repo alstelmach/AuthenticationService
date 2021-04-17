@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.Abstractions.Messaging.Events;
+using AsCore.Application.Abstractions.Messaging.Events;
 using User.Application.Dto;
-using User.Application.Dto.Repositories;
+using User.Application.Repositories;
 using User.Domain.User.Events;
 using User.IntegrationEvents.User;
 
