@@ -1,0 +1,42 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using FluentValidation;
+using User.Domain.User.Exceptions;
+using User.Domain.User.Repositories;
+
+namespace User.Domain.User.Validators
+{
+    public sealed class UserValidator : AbstractValidator<User>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IMailAddressValidator _mailAddressValidator;
+
+        public UserValidator(IUserRepository userRepository,
+            IMailAddressValidator mailAddressValidator)
+        {
+            _userRepository = userRepository;
+            _mailAddressValidator = mailAddressValidator;
+
+            RuleFor(user => user.Login)
+                .MustAsync(BeAUniqueLoginAsync)
+                .OnAnyFailure(user => throw new UserLoginUniquenessException(user.Login));
+
+            RuleFor(user => user.MailAddress)
+                .Must(BeAValidMailAddress)
+                .OnAnyFailure(user => throw new InvalidMailAddressException(user.MailAddress));
+
+            RuleFor(user => user.MailAddress)
+                .MustAsync(BeAUniqueMailAddressAsync)
+                .OnAnyFailure(user => throw new UserMailAddressUniquenessException(user.MailAddress));
+        }
+
+        private async Task<bool> BeAUniqueLoginAsync(string login, CancellationToken cancellationToken) =>
+            await _userRepository.CheckIsLoginFreeAsync(login, cancellationToken);
+
+        private bool BeAValidMailAddress(string mailAddress) =>
+            _mailAddressValidator.Validate(mailAddress);
+
+        private async Task<bool> BeAUniqueMailAddressAsync(string mailAddress, CancellationToken cancellationToken) =>
+            await _userRepository.CheckIsMailAddressFreeAsync(mailAddress, cancellationToken);
+    }
+}

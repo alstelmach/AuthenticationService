@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
+      <ProjectReference Include="..\User.IntegrationEvents\User.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AsCore.Application.Abstractions" Version="1.0.1" />
+      <PackageReference Include="Json.Net" Version="1.0.25" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+</Project>
