@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["../User.Domain/User.Domain.csproj", "User.Domain/"]
+COPY ["../User.Domain/User.Domain.csproj", "User.Domain/"
 COPY ["../User.Application/User.Application.csproj", "User.Application/"]
 COPY ["../User.Infrastructure/User.Infrastructure.csproj", "User.Infrastructure/"]
 COPY ["User.Api/User.Api.csproj", "User.Api/"]
