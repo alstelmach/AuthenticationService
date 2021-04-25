@@ -2,6 +2,7 @@ using System;
 using AsCore.Infrastructure.HealthCheck;
 using AsCore.Infrastructure.Identity;
 using AsCore.Infrastructure.Mvc;
+using AsCore.Infrastructure.Mvc.Cors;
 using AsCore.Utilities.Swagger;
 using User.Domain;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +38,7 @@ namespace User.Api
                     .UseHttpsRedirection()
                     .UseRouting()
                     .UseIdentityMiddlewares()
-                    .UseEndpointsMiddleware();
+                    .UseMvcMiddlewares()
+                    .UseCorsMiddlewares();
     }
 }
