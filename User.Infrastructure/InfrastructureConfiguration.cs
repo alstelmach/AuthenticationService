@@ -33,7 +33,10 @@ namespace User.Infrastructure
                     .Services
                     .RegisterMessagingDependencies(configuration)
                     .RegisterPersistenceDependencies(configuration)
-                    .AddMvcDependencies(MajorVersion, MinorVersion)
+                    .AddMvcDependencies(configuration,
+                        MajorVersion,
+                        MinorVersion,
+                        true)
                     .RegisterInfrastructureServices(configuration)
                     .AddJwtServices(configuration)
                     .AddAuthorizationServices();
